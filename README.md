@@ -6,6 +6,18 @@
 ```
 รูปทั้งหมดต้องเขียนเข้า electron/Current, electron/Normal, electron/Fever
 ```
+## ARM64 nodejs
+```
+wget https://nodejs.org/dist/v{version}/node-v{version}-linux-arm64.tar.xz
+tar -xJf node-v{version}-linux-arm64.tar.xz
+cd node-v{version}-linux-arm64
+sudo cp -R * /usr/local/
+node -v
+npm -v
+
+{version} = version of  nodejs 12.13.0 for example
+REF = https://forums.developer.nvidia.com/t/how-to-install-node-js/84030/3
+```
 
 ## Electron Dependencies
 ``` json
@@ -33,7 +45,7 @@ npm start
 ![npm_start](/readme_img/npm_start.PNG)
 
 ```
-และจำได้หน้า application ดังภาพ
+และจะได้หน้า application ดังภาพ
 ***หมายเหตุภาพใน electron/Current รบกวบตั้งชื่อต่างกันมากกว่า 1 ภาพแล้ว overwrite สลับกัน เคยลอง overwrite ไปเรื่อยๆแล้ว แต่ตัว electron มันไม่อ่านครับ***
 ```
 ![application](/readme_img/application.PNG)
