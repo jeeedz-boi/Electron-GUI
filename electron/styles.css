@@ -1,0 +1,17 @@
+body {
+    background-color: #222233;
+    color: #AACCFF;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    height: 150px;   
+    overflow: hidden;
+    border-radius: 5px;
+    padding-left: 25px;
+}
+h3{
+    margin: 0px;
+}
+button{
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin-bottom: 15px;
+    font-size: 5ch;
+}

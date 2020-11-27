@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screening App</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #222233;
+            color: #AACCFF;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            height: 150px;   
+            overflow: hidden;
+            border-radius: 5px;
+            padding-left: 25px;
+        }
+        h3{
+            margin: 0px;
+        }
+        button{
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Walking Through the Fever screening station App</h1>
+    <div class="row" id="each-frame-from-camera " style="margin-bottom: 15px;margin: auto;margin-bottom: 15px;text-align: center;">
+
+        <!-- <img src="./image/thermal-tester.jpg" id="thermal-img" alt="Image" style="float: left;width: 48%;max-height: 30%;border-style: solid;border-radius: 5px;border-color: white;"> -->
+
+        <img src="./image/white.jpg" id="real-img" alt="Image" style="float: left;max-width: 640px;max-height: 480px;border-style: solid;border-radius: 5px;border-color: white;">
+
+        <!-- <button id="test-demo" style="width: 100px;height: 30px;">Click here</button>
+        <button id="fever-demo" style="width: 100px;height: 30px;">Fever</button> -->
+    </div>
+    <div class="row" id="result" style="float: left;width: 70%;border-style: solid;border-radius: 5px;border-color: white;text-align: center;margin: auto;">
+
+        <div style="float: left;max-width: 13%;margin: 15px;text-align: center;">
+            <img src="./image/white.jpg"
+            id="result-img6" alt="Image" style="float: unset;max-width: 100%;margin: 5px;border-style: solid;border-radius: 3px;border-color: white;">
+            <h3 id="temp-result-img6">0.00&#176;C</h3>
+        </div>
+
+        <div style="float: left;max-width: 13%;margin: 15px;text-align: center;">
+            <img src="./image/white.jpg"
+            id="result-img5" alt="Image" style="float: unset;max-width: 100%;margin: 5px;border-style: solid;border-radius: 3px;border-color: white;">
+            <h3 id="temp-result-img5">0.00&#176;C</h3>
+        </div>
+
+        <div style="float: left;max-width: 13%;margin: 15px;text-align: center;">
+            <img src="./image/white.jpg"
+            id="result-img4" alt="Image" style="float: unset;max-width: 100%;margin: 5px;border-style: solid;border-radius: 3px;border-color: white;">
+            <h3 id="temp-result-img4">0.00&#176;C</h3>
+        </div>
+
+        <div style="float: left;max-width: 13%;margin: 15px;text-align: center;">
+            <img src="./image/white.jpg"
+            id="result-img3" alt="Image" style="float: unset;max-width: 100%;margin: 5px;border-style: solid;border-radius: 3px;border-color: white;">
+            <h3 id="temp-result-img3">0.00&#176;C</h3>
+        </div>
+
+        <div style="float: left;max-width: 13%;margin: 15px;text-align: center;">
+            <img src="./image/white.jpg"
+            id="result-img2" alt="Image" style="float: unset;max-width: 100%;margin: 5px;border-style: solid;border-radius: 3px;border-color: white;">
+            <h3 id="temp-result-img2">0.00&#176;C</h3>
+        </div>
+
+        <div style="float: left;max-width: 13%;margin: 15px;text-align: center;">
+            <img src="./image/white.jpg"
+            id="result-img1" alt="Image" style="float: unset;max-width: 100%;margin: 5px;border-style: solid;border-radius: 3px;border-color: white;">
+            <h3 id="temp-result-img1">0.00&#176;C</h3>
+        </div>
+
+    </div>
+    <div id="img-alert" style="float: left;max-width: 25%;text-align: center;margin-left: 25px;text-align: center;">
+        <img src="./image/white.jpg" id="result-img-alert" alt="Image" style="float: unset;max-width: 77%;margin: 0px;border-style: solid;border-radius: 3px;border-color: white;">
+        <h3 id="temp-result-img-alert">0.00&#176;C</h3>
+    </div>
+    <script>
+        require('./index.js')
+    </script>
+</body>
+</html>
