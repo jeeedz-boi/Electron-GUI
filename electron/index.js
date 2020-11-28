@@ -83,41 +83,28 @@ var getMostRecent = function (dir, cb) {
 	})
 }
 
-function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send(null);
-}
 
+var prevImageName = ""
 setInterval(function(){
     // Get recent file
     getMostRecent('Current/', function (err, recent) {
-        real_img.setAttribute('src', "Current/"+recent);
+        // real_img.setAttribute('src', "Current/"+recent);
+        let timestamp =  new Date().getTime()
+        document.getElementById("real-img").src = "Current/"+recent+"?t="+timestamp
         
-        // if (err) console.error(err);
-        // console.log(recent);
     });
 
     getMostRecent('Normal/', function (err, recent) {
-        fs.readFile((`Normal/${recent}`),(err, data) => { 
-            data = data.toString()
-            temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-            updateResultImage(`Normal/${recent.split(".")[0]}.jpg`, temp)
-        })
-        // if (err) console.error(err);
-        // console.log(recent);
+        var thisImageName =  recent.split(",")[0]
+        console.log(thisImageName)
+        if(thisImageName != prevImageName){
+            fs.readFile((`Normal/${recent}`),(err, data) => { 
+                data = data.toString()
+                temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
+                updateResultImage(`Normal/${recent.split(".")[0]}.jpg`, temp)
+            })
+        }
+        prevImageName = thisImageName
     });
 
 
@@ -128,66 +115,6 @@ setInterval(function(){
             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
             document.getElementById("temp-result-img-alert").innerHTML = temp
         })
-        // if (err) console.error(err);
-        // console.log(recent);
     });
-    // fs.recurse('Normal/', ['*.jpg'], function(filepath, relative, filename) {
-    //     normalImg.push(filename)
-    // });
-
-    // fs.recurse('Fever/', ['*.jpg'], function(filepath, relative, filename) {
-    //     feverImg.push(filename)
-    // });
-
-    // fs.recurse('Current/', ['*.jpg'], function(filepath, relative, filename) {
-    //     // currentImg.push(filename)  
-    //     real_img.setAttribute('src', "Current/"+filename);
-    //     if(normalImg.includes(filename)){
-    //         fs.readFile((`Normal/${filename.split(".")[0]}.txt`),(err, data) => { 
-    //             data = data.toString()
-    //             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-    //             updateResultImage("Current/"+filename, temp)
-    //         }) 
-    //     }
-    //     if(feverImg.includes(filename)){
-    //         result_img_alert.setAttribute('src', "Current/"+filename);
-    //         fs.readFile((`Fever/${filename.split(".")[0]}.txt`),(err, data) => { 
-    //             data = data.toString()
-    //             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-    //             document.getElementById("temp-result-img-alert").innerHTML = temp
-    //         })
-    //     }
-    // });
 
 }, 100);
-
-// testDemo.onclick = function (){
-//     real_img.setAttribute('src', "Current/"+currentImg[i]);
-//     if(normalImg.includes(currentImg[i])){
-//         var imgPath = "Normal/"+currentImg[i]
-//         fs.readFile((`${imgPath.split(".")[0]}.txt`),(err, data) => { 
-//             data = data.toString()
-//             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-//             console.log(i)
-//             updateResultImage(imgPath, temp)
-//         }) 
-//     }
-//     if(feverImg.includes(currentImg[i])){
-//         result_img_alert.setAttribute('src', "Fever/"+currentImg[i]);
-//         fs.readFile((`Fever/${currentImg[i].split(".")[0]}.txt`),(err, data) => { 
-//             data = data.toString()
-//             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-//             document.getElementById("temp-result-img-alert").innerHTML = temp
-//         })
-//     }
-//     i++;
-// }
-// feverTest.onclick = function (){
-//     real_img.setAttribute('src', "Fever/img-20201011-2430.jpg");
-//     result_img_alert.setAttribute('src', "Fever/img-20201011-2430.jpg");
-//     fs.readFile((`Fever/img-20201011-2430.txt`),(err, data) => { 
-//         data = data.toString()
-//         temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-//         document.getElementById("temp-result-img-alert").innerHTML = temp
-//     })
-// }

@@ -1,120 +1,82 @@
+const protocol  = require("electron");
 const electron = require("electron");
-const ipc = electron.ipcRenderer;
+// const {app, BrowserWindow, Menu} = electron;
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+// const Menu = electron.Menu;
+const {Menu} = electron;
+const path = require("path");
+const url = require("url");
+const ipc = electron.ipcMain;
+const dialog = electron.dialog;
+const hostname = 'localhost'
+const PORT = 5555
+const express = require('express')
+const router = express()
+const bodyParser = require('body-parser')
+const fs = require('file-system');
 const glob = require("glob")
-var path = require('path');
-var fs = require('file-system');
+// const fs = require('fs');
+
+// file.readFile === fs.readFile
 
 
-const result_img6 = document.getElementById('result-img6');
-const result_img5 = document.getElementById('result-img5');
-const result_img4 = document.getElementById('result-img4');
-const result_img3 = document.getElementById('result-img3');
-const result_img2 = document.getElementById('result-img2');
-const result_img1 = document.getElementById('result-img1');
-const real_img = document.getElementById('real-img');
-const thermal_img = document.getElementById('thermal-img');
-const result_img_alert = document.getElementById('result-img-alert');
+// Middleware
+router.use(bodyParser.json())
 
-var normalImg = [];
-var feverImg = [];
-var currentImg = [];
-var testDemo  = document.getElementById('test-demo');
-var feverTest = document.getElementById('fever-demo');
-var i = 0;
+let mainWindow;
 
-function updateResultImage(data,temp){
-    
-    const result_img1_src = document.getElementById('result-img1').src;
-    const result_img2_src = document.getElementById('result-img2').src;
-    const result_img3_src = document.getElementById('result-img3').src;
-    const result_img4_src = document.getElementById('result-img4').src;
-    const result_img5_src = document.getElementById('result-img5').src;
-    const result_img6_src = document.getElementById('result-img6').src;
-    result_img1.setAttribute('src', result_img2_src);
-    document.getElementById("temp-result-img1").innerHTML = document.getElementById("temp-result-img2").innerHTML
-    result_img2.setAttribute('src', result_img3_src);
-    document.getElementById("temp-result-img2").innerHTML = document.getElementById("temp-result-img3").innerHTML
-    result_img3.setAttribute('src', result_img4_src);
-    document.getElementById("temp-result-img3").innerHTML = document.getElementById("temp-result-img4").innerHTML
-    result_img4.setAttribute('src', result_img5_src);
-    document.getElementById("temp-result-img4").innerHTML = document.getElementById("temp-result-img5").innerHTML
-    result_img5.setAttribute('src', result_img6_src);
-    document.getElementById("temp-result-img5").innerHTML = document.getElementById("temp-result-img6").innerHTML
-    result_img6.setAttribute('src', data);
-    document.getElementById("temp-result-img6").innerHTML = temp
+function createWindow(){
+    mainWindow = new BrowserWindow({minWidth: 1280,minHeight: 850, webPreferences: {nodeIntegration: true}});    // create new window
+    mainWindow.loadURL(url.format({     // Load html into window
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file',
+        slashes: true
+        // Basically passing file://dirname/index.html into loadURL
+    }));
+
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    })
+
 }
 
-ipc.on('update-new-img', function(event, data){
-    updateResultImage(data)
+app.on('ready', createWindow);
+
+app.on('window-all-closed', () => {
+    if(process.platform !== 'darwin'){
+        app.quit()
+    }
+});
+
+app.on('activate', () => {
+    if(mainWindow === null){
+        createWindow()
+    }
+});
+
+// Web Server Run
+router.listen(PORT, hostname, () => {
+    console.log(`Server running at http://${hostname}:${PORT}/`);
+});
+module.exports = router
+
+// thermal camera
+// router.get("/thermal/", (req,res) =>{
+//     mainWindow.webContents.send('update-thermal' , req.body.file);
+// })
+
+// real camera
+router.get("/real/", (req,res) =>{
+    mainWindow.webContents.send('update-real' , req.body.file);
 })
 
-ipc.on('update-result-img-alert', function(event, data){
-    result_img_alert.setAttribute('src', data);
+// new result image
+router.get("/", (req,res) =>{
+    mainWindow.webContents.send('update-new-img' , req.body.file);
 })
 
-ipc.on('update-real', function(event, data){
-    real_img.setAttribute('src', data);
+// new alert image
+router.get("/alert/", (req,res) =>{
+    mainWindow.webContents.send('update-result-img-alert' , req.body.file);
 })
-
-ipc.on('update-thermal', function(event, data){
-    thermal_img.setAttribute('src', data);
-})
-
-// Get recent file
-var getMostRecent = function (dir, cb) {
-
-	var dir = path.resolve(dir);
-	var files = fs.readdir(dir, function (err, files) {
-		var sorted = files.map(function(v) {
-			var filepath = path.resolve(dir, v);
-			return {
-				name:v,
-				time:fs.statSync(filepath).mtime.getTime()
-			}; 
-		})
-		.sort(function(a, b) { return b.time - a.time; })
-		.map(function(v) { return v.name; });
-
-		if (sorted.length > 0) {
-			cb(null, sorted[0]);
-		} else {
-			cb('Y U NO have files in dis dir?');
-		}
-	})
-}
-
-
-var prevImageName = ""
-setInterval(function(){
-    // Get recent file
-    getMostRecent('Current/', function (err, recent) {
-        // real_img.setAttribute('src', "Current/"+recent);
-        let timestamp =  new Date().getTime()
-        document.getElementById("real-img").src = "Current/"+recent+"?t="+timestamp
-        
-    });
-
-    getMostRecent('Normal/', function (err, recent) {
-        var thisImageName =  recent.split(",")[0]
-        console.log(thisImageName)
-        if(thisImageName != prevImageName){
-            fs.readFile((`Normal/${recent}`),(err, data) => { 
-                data = data.toString()
-                temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-                updateResultImage(`Normal/${recent.split(".")[0]}.jpg`, temp)
-            })
-        }
-        prevImageName = thisImageName
-    });
-
-
-    getMostRecent('Fever/', function (err, recent) {
-        result_img_alert.setAttribute('src', `Fever/${recent.split(".")[0]}.jpg`);
-        fs.readFile((`Fever/${recent}`),(err, data) => {
-            data = data.toString()
-            temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-            document.getElementById("temp-result-img-alert").innerHTML = temp
-        })
-    });
-
-}, 100);
