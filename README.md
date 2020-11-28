@@ -31,17 +31,17 @@ REF = https://forums.developer.nvidia.com/t/how-to-install-node-js/84030/3
         "util": "^0.12.3"
 }
 ```
+## Deploy & Install Dependency
 ```
+git clone https://github.com/naiguncha/Electron-GUI.git
+cd Electron-GUI/electron
 npm i body-parser express file-system fs glob request util --save
+npm start
 ```
 
 ### After install all node dependency
-```
-cd project/path/electron
-npm start
 
-ควรจะเป็นดังภาพด้านล่าง
-```
+#### ควรจะเป็นดังภาพด้านล่าง
 ![npm_start](/readme_img/npm_start.PNG)
 
 ```
