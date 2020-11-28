@@ -98,7 +98,7 @@ setInterval(function(){
         var thisImageName =  recent.split(",")[0]
         console.log(thisImageName)
         if(thisImageName != prevImageName){
-            fs.readFile((`Normal/${recent}`),(err, data) => { 
+            fs.readFile((`Normal/${recent.split(".")[0]}.txt`),(err, data) => { 
                 data = data.toString()
                 temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
                 updateResultImage(`Normal/${recent.split(".")[0]}.jpg`, temp)
@@ -110,7 +110,7 @@ setInterval(function(){
 
     getMostRecent('Fever/', function (err, recent) {
         result_img_alert.setAttribute('src', `Fever/${recent.split(".")[0]}.jpg`);
-        fs.readFile((`Fever/${recent}`),(err, data) => {
+        fs.readFile((`Fever/${recent.split(".")[0]}.txt`),(err, data) => {
             data = data.toString()
             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
             document.getElementById("temp-result-img-alert").innerHTML = temp
