@@ -35,7 +35,7 @@ REF = https://forums.developer.nvidia.com/t/how-to-install-node-js/84030/3
 ```
 git clone https://github.com/naiguncha/Electron-GUI.git
 cd Electron-GUI/electron
-npm i body-parser express file-system fs glob request util --save
+npm i body-parser express file-system fs glob request util python-shell --save
 npm start
 ```
 

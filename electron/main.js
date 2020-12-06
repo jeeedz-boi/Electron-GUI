@@ -16,13 +16,11 @@ const router = express()
 const bodyParser = require('body-parser')
 const fs = require('file-system');
 const glob = require("glob")
+const PythonShell = require('python-shell');
 // const fs = require('fs');
 
 // file.readFile === fs.readFile
 
-
-// Middleware
-router.use(bodyParser.json())
 
 let mainWindow;
 
@@ -55,28 +53,17 @@ app.on('activate', () => {
     }
 });
 
-// Web Server Run
-router.listen(PORT, hostname, () => {
-    console.log(`Server running at http://${hostname}:${PORT}/`);
+
+
+const PythonSrc = "fileManager"+".py"
+const options = {
+    mode: 'text',
+    pythonOptions:['-u'],
+};
+
+
+PythonShell.PythonShell.run(PythonSrc, options, function(err, output){
+    if(err) console.log('err msg:', err);
+    console.log('finishied');
+    console.log(output)
 });
-module.exports = router
-
-// thermal camera
-// router.get("/thermal/", (req,res) =>{
-//     mainWindow.webContents.send('update-thermal' , req.body.file);
-// })
-
-// real camera
-router.get("/real/", (req,res) =>{
-    mainWindow.webContents.send('update-real' , req.body.file);
-})
-
-// new result image
-router.get("/", (req,res) =>{
-    mainWindow.webContents.send('update-new-img' , req.body.file);
-})
-
-// new alert image
-router.get("/alert/", (req,res) =>{
-    mainWindow.webContents.send('update-result-img-alert' , req.body.file);
-})

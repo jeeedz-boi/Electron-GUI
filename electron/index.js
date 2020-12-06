@@ -61,8 +61,7 @@ ipc.on('update-thermal', function(event, data){
 })
 
 // Get recent file
-var getMostRecent = function (dir, cb) {
-
+var getMostRecent = async function (dir, cb) {
 	var dir = path.resolve(dir);
 	var files = fs.readdir(dir, function (err, files) {
 		var sorted = files.map(function(v) {
@@ -94,23 +93,23 @@ setInterval(function(){
         
     });
 
-    getMostRecent('Normal/', function (err, recent) {
+    getMostRecent('Normal/Display', function (err, recent) {
         var thisImageName =  recent.split(",")[0]
         console.log(thisImageName)
         if(thisImageName != prevImageName){
-            fs.readFile((`Normal/${recent.split(".")[0]}.txt`),(err, data) => { 
+            fs.readFile((`Normal/Display/${recent.split(".")[0]}.txt`),(err, data) => { 
                 data = data.toString()
                 temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
-                updateResultImage(`Normal/${recent.split(".")[0]}.jpg`, temp)
+                updateResultImage(`Normal/Display/${recent.split(".")[0]}.jpg`, temp)
             })
         }
         prevImageName = thisImageName
     });
 
 
-    getMostRecent('Fever/', function (err, recent) {
-        result_img_alert.setAttribute('src', `Fever/${recent.split(".")[0]}.jpg`);
-        fs.readFile((`Fever/${recent.split(".")[0]}.txt`),(err, data) => {
+    getMostRecent('Fever/Display', function (err, recent) {
+        result_img_alert.setAttribute('src', `Fever/Display/${recent.split(".")[0]}.jpg`);
+        fs.readFile((`Fever/Display/${recent.split(".")[0]}.txt`),(err, data) => {
             data = data.toString()
             temp = parseFloat(data.split(",")[0]).toFixed(2)+"&#176;C"
             document.getElementById("temp-result-img-alert").innerHTML = temp
