@@ -4,7 +4,7 @@
 ![project_layout](/readme_img/project_layout.PNG)
 
 ```
-รูปทั้งหมดต้องเขียนเข้า electron/Current, electron/Normal, electron/Fever
+รูปทั้งหมดต้องเขียนเข้า electron/Current, electron/Normal, electron/Normal/Display, electron/Fever, electron/Fever/Display 
 ```
 ## ARM64 nodejs
 ```
