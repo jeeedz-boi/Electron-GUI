@@ -4,7 +4,7 @@
 ![project_layout](/readme_img/project_layout.PNG)
 
 ```
-รูปทั้งหมดต้องเขียนเข้า electron/Normal, electron/Fever เพื่อเก็บข้อมูลถาวร
+รูปทั้งหมดต้องเขียนเข้า electron/Normal, electron/Fever เพื่อเก็บข้อมูล
 และ
 electron/Current, electron/Normal/Display, electron/Fever/Display เพื่อแสดงผลในหน้า GUI
 ```
