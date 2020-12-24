@@ -19,6 +19,15 @@ npm -v
 REF = https://forums.developer.nvidia.com/t/how-to-install-node-js/84030/3
 ```
 
+## x86 Ubuntu nodejs
+```
+sudo apt update
+sudo apt install nodejs
+sudo apt install npm
+nodejs -v
+npm -v
+```
+
 ## Electron Dependencies
 ``` json
 "dependencies": {
