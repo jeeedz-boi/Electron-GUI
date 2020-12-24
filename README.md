@@ -7,7 +7,6 @@
 รูปทั้งหมดต้องเขียนเข้า electron/Normal, electron/Fever เพื่อเก็บข้อมูลถาวร
 และ
 electron/Current, electron/Normal/Display, electron/Fever/Display เพื่อแสดงผลในหน้า GUI
- 
 ```
 ## ARM64 nodejs
 ```
