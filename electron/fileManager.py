@@ -11,7 +11,7 @@ while(True):
     ferver_list = os.listdir(fever_display_path)
 
     if(len(normals_list) > 12):
-        sorted_list = sorted(ferver_list)
+        sorted_list = sorted(normals_list)
         os.remove(normal_display_path+'/'+sorted_list[0])
         os.remove(normal_display_path+'/'+sorted_list[1])
 
